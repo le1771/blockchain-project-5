@@ -1,14 +1,12 @@
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 
-import 'openzeppelin-solidity/contracts/token/ERC721/ERC721.sol';
+import './ERC721Token.sol';
 
-
-
-contract StarNotary is ERC721 { 
+contract StarNotary is ERC721Token { 
 
     struct Star { 
         string name;
-        string story;
+        string starStory;
         string ra; 
         string dec;
         string mag;
@@ -52,12 +50,12 @@ contract StarNotary is ERC721 {
         require(_raBytes.length + _decBytes.length + _magBytes.length == 32,"Required coordinate format: ra_###.###, dec_###.###, mag_###.###");
 
         //Concatenate the coordinate for look up & check Uniqless by coordinates 
-        bytes32 starCoordinate = concatStarCoordinate(_raBytes, _decBytes, _magBytes);
+        //bytes32 starCoordinate = concatStarCoordinate(_raBytes, _decBytes, _magBytes);
 
-        require(starCoordinateExist[starCoordinate] == false,"Star coorindate already exist.");
+        //require(starCoordinateExist[starCoordinate] == false,"Star coorindate already exist.");
 
         tokenIdToStarInfo[_tokenId] = newStar;
-        starCoordinateExist[starCoordinate] = true;
+        //starCoordinateExist[starCoordinate] = true;
 
         _mint(msg.sender, _tokenId);
     }
@@ -98,9 +96,9 @@ contract StarNotary is ERC721 {
         return starCoordinateExist[starCoordinate];
     }
 
-    function mint(address to, uint256 tokenId) internal {
-        _mint(to, tokenId);
-    }
+    //function mint(address to, uint256 tokenId) internal {
+    //    _mint(to, tokenId);
+    //}
 
     // All these function are inherited from open-zeppelin ERC721
     // approve()
@@ -113,8 +111,8 @@ contract StarNotary is ERC721 {
     function starsForSale() public {
     }
 
-    function tokenIdToStarInfo(uint256 tokenId) public returns(string) {
-        require(_exist(tokenId), "Token does not exist");
+    /*function tokenIdToStarInfo(uint256 tokenId) public returns(string) {
+        require(_exists(tokenId), "Token does not exist");
         return tokenIdToStarInfo[tokenId];
-    }
+    }*/
 }
