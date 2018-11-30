@@ -21,6 +21,10 @@ contract ERC721Token is ERC721 {
     _;
   }
 
+  function mint(uint256 tokenId) public {
+    _mint(msg.sender, tokenId);
+  }
+
   function _transferFrom(address _from, address _to, uint256 _tokenId) external payable hasPermission(msg.sender, _tokenId) {
 
     _transferFromHelper(_from, _to, _tokenId);
